@@ -1,23 +1,24 @@
-# dummy data
-
+from rest_framework import viewsets, permissions
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from .models import Book, SwapRequest
+from .serializers import BookSerializer, SwapRequestSerializer
 
-books_data = [
-    {
-        'id': 1,
-        'title': 'Sample Book 1',
-        'author': 'Author 1',
-        'credit': 5
-    },
-    {
-        'id': 2,
-        'title': 'Sample Book 2',
-        'author': 'Author 2',
-        'credit': 7
-    }
-]
+class BookViewSet(viewsets.ModelViewSet):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+class SwapRequestViewSet(viewsets.ModelViewSet):
+    queryset = SwapRequest.objects.all()
+    serializer_class = SwapRequestSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 @api_view(['GET'])
 def book_list(request):
-    return Response(books_data)
+    books = Book.objects.all()
+    serializer = BookSerializer(books, many=True)
+    return Response(serializer.data)
