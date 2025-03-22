@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import User
 
 class Book(models.Model):
@@ -30,3 +31,7 @@ class SwapRequest(models.Model):
 
     def __str__(self):
         return f"{self.requester.username} - {self.book.name}"
+    
+    
+    
+
