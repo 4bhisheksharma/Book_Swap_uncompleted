@@ -8,7 +8,11 @@ class Book(models.Model):
     description = models.TextField()
     credit = models.IntegerField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    image = models.ImageField(upload_to='books/')
+    image = models.ImageField(
+        upload_to='books/',
+        blank=True,
+        null=True
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     is_available = models.BooleanField(default=True)
 

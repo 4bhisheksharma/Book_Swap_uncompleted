@@ -10,7 +10,7 @@ class BookSerializer(serializers.ModelSerializer):
             'credit': {'required': False},  # Allow partial updates
             'price': {'required': False}
         }
-        read_only_fields = ['owner', 'image']
+        read_only_fields = ['owner']
 
 class SwapRequestSerializer(serializers.ModelSerializer):
     class Meta:
