@@ -3,6 +3,7 @@ from .models import Book, SwapRequest
 from django.contrib.auth.models import User 
 
 class BookSerializer(serializers.ModelSerializer):
+    owner = serializers.StringRelatedField(source='owner.username')
     class Meta:
         model = Book
         fields = ['id', 'name', 'description', 'credit', 'price', 'image', 'owner']
